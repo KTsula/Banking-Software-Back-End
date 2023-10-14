@@ -34,16 +34,18 @@ def test_create_account(testing_client):
     )
     assert response.status_code == 200
 
-def test_accountWithTooLongName_notCreate(testing_client):
+# write a function that tests update account
+def test_update_account(testing_client):
     """
     GIVEN a Flask application
-    WHEN the '/accounts' page is posted to (POST)
-    THEN check the response is not valid
+    WHEN the '/accounts' page is posted to (PUT) with an name
+    THEN check the response is valid
     """
-    response = testing_client.post(
-        "/accounts", json={"name": "John Doeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "country": "Spain", "currency": "€"}
-    )
-    assert response.status_code == 400
+    testing_client.post(
+        "/accounts", json={"name": "John Doe", "country": "Spain", "currency": "€"}
+    )  
+    response = testing_client.put("/accounts/1", json={"name": "Keti"})
+    assert response.status_code == 200
 
 
 def test_delete_account(testing_client):
